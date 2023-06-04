@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".SignupActivity">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,39 +16,23 @@
         app:srcCompat="@drawable/top_background" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hi,"
-        android:textColor="#fff"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.087"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login to Continue"
+        android:text="Create Account"
         android:textColor="#fff"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.13"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.37" />
+        app:layout_constraintVertical_bias="0.77" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="550dp"
+        android:layout_height="700dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="114dp"
         android:orientation="vertical"
@@ -57,12 +41,58 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.52">
+        app:layout_constraintVertical_bias="0.56">
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Account Number"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/accountNumber"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/editext_background"
+            android:ems="10"
+            android:hint="987654321"
+            android:inputType="textEmailAddress"
+            android:padding="12dp"
+            android:textColor="#707070"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Name"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/editext_background"
+            android:ems="10"
+            android:hint="Jane Doe"
+            android:inputType="textEmailAddress"
+            android:padding="12dp"
+            android:textColor="#707070" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:text="Email"
             android:textColor="#000000"
             android:textSize="20sp"
@@ -101,22 +131,11 @@
             android:background="@drawable/editext_background"
             android:ems="10"
             android:hint="******"
-            android:inputType="textEmailAddress"
+            android:inputType="textPassword"
             android:padding="12dp"
             android:textColor="#707070"
 
             android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/forgetPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Don't Remember Password?"
-            android:textAlignment="center" />
-
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -124,12 +143,12 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/login"
+                android:id="@+id/signup"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/button_background"
-                android:text="login"
+                android:text="Signup"
                 android:textColor="@color/white" />
 
             <LinearLayout
@@ -153,7 +172,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
-                    android:text="or Signup" />
+                    android:text="or Login" />
 
                 <View
                     android:id="@+id/view2"
@@ -165,16 +184,17 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/signup"
+                android:id="@+id/login"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/button_background_light_green"
-                android:text="signup"
+                android:text="Login"
                 android:textColor="@color/white" />
         </LinearLayout>
 
 
     </LinearLayout>
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
@@ -185,4 +205,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
