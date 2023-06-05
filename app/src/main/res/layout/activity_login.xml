@@ -101,7 +101,7 @@
             android:background="@drawable/editext_background"
             android:ems="10"
             android:hint="******"
-            android:inputType="textEmailAddress"
+            android:inputType="textPassword"
             android:padding="12dp"
             android:textColor="#707070"
 
