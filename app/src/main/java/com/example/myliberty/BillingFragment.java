@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link BillingFragment#newInstance} factory method to
+ * Use the {@link BillingFragment#} factory method to
  * create an instance of this fragment.
  */
 public class BillingFragment extends Fragment {
@@ -18,6 +18,7 @@ public class BillingFragment extends Fragment {
 
     public BillingFragment() {
         // Required empty public constructor
+        //Ajay Paul
     }
 
 
