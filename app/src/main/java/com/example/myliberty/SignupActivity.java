@@ -14,10 +14,17 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.myliberty.Models.Customer;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.HashMap;
 
 public class SignupActivity extends AppCompatActivity {
     private EditText name;
@@ -27,6 +34,8 @@ public class SignupActivity extends AppCompatActivity {
     private Button signup,login;
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
+    private DatabaseReference mDatabase;
+    HashMap<String, String>  mobile_account = new HashMap<String, String>();
 
 
 
@@ -35,6 +44,14 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        mobile_account.put("987654321","6477734469");
+        mobile_account.put("987654322","6477734468");
+        mobile_account.put("987654323","6477734467");
+        mobile_account.put("987654324","6477734466");
+        mobile_account.put("987654325","6477734465");
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         mAuth = FirebaseAuth.getInstance();
         name=findViewById(R.id.name);
         email=findViewById(R.id.email);
@@ -86,7 +103,11 @@ public class SignupActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressBar.setVisibility(View.GONE);
                         if(task.isSuccessful()){
+                            String uid=mAuth.getUid();
+                            String mobileNumber=mobile_account.get(_accountNumber);
+                            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
+                            writeData(uid,_accountNumber,_name,_email,"12345",mobileNumber,timestamp.toString(),addDays(timestamp,30).toString(),true,2.3f,20f);
                            Toast.makeText(SignupActivity.this,"Account Created Successfully",Toast.LENGTH_SHORT).show();
                             Intent i =new Intent(getApplicationContext(),MainActivity.class);
                             startActivity(i);
@@ -102,8 +123,20 @@ public class SignupActivity extends AppCompatActivity {
 
 
     }
+    public void writeData(String uid, String accountNumber,String name, String email, String planId, String mobileNumber, String cycleStartDate, String cycleEndDate, Boolean billPaid, Float dataRemaining,Float maxData){
+        Customer customer=new Customer(accountNumber,name,email,planId,mobileNumber,cycleStartDate,cycleEndDate,billPaid,dataRemaining,maxData);
+        mDatabase.child("accountInfo").child(uid).setValue(customer);
+
+    }
 
     public static boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+    }
+    public static Timestamp addDays(Timestamp date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);// w ww.  j ava  2  s  .co m
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return new Timestamp(cal.getTime().getTime());
+
     }
 }

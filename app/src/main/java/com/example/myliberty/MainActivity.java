@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     HomeFragment homeFragment = new HomeFragment();
     BillingFragment  billingFragment = new BillingFragment();
     SupportFragment supportFragment = new SupportFragment();
+    PlansFragment plansFragment=new PlansFragment();
+    ProfileFragment profileFragment =new ProfileFragment();
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -47,6 +49,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.flFragment, billingFragment)
+                        .commit();
+                return true;
+            case R.id.profile:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.flFragment, profileFragment)
+                        .commit();
+                return true;
+            case R.id.plans:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.flFragment, plansFragment)
                         .commit();
                 return true;
         }

@@ -10,6 +10,14 @@
         android:icon="@mipmap/ic_home_round"/>
     <item
         android:id="@+id/billing"
-        android:title="billing"
+        android:title="Billing"
+        android:icon="@mipmap/ic_launcher"/>
+    <item
+        android:id="@+id/plans"
+        android:title="Plans"
+        android:icon="@mipmap/ic_launcher"/>
+    <item
+        android:id="@+id/profile"
+        android:title="profile"
         android:icon="@mipmap/ic_launcher"/>
 </menu>
