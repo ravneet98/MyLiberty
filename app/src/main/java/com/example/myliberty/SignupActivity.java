@@ -19,8 +19,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -109,6 +113,8 @@ public class SignupActivity extends AppCompatActivity {
 
                             writeData(uid,_accountNumber,_name,_email,"12345",mobileNumber,timestamp.toString(),addDays(timestamp,30).toString(),true,2.3f,20f);
                            Toast.makeText(SignupActivity.this,"Account Created Successfully",Toast.LENGTH_SHORT).show();
+
+
                             Intent i =new Intent(getApplicationContext(),MainActivity.class);
                             startActivity(i);
                         }
@@ -116,6 +122,7 @@ public class SignupActivity extends AppCompatActivity {
                             Toast.makeText(SignupActivity.this,"Account Creation failed",Toast.LENGTH_SHORT).show();
                         }
                     }
+
                 });
             }
 
