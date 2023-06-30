@@ -111,7 +111,7 @@ public class SignupActivity extends AppCompatActivity {
                             String mobileNumber=mobile_account.get(_accountNumber);
                             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-                            writeData(uid,_accountNumber,_name,_email,"12345",mobileNumber,timestamp.toString(),addDays(timestamp,30).toString(),true,2.3f,20f);
+                            writeData(uid,_accountNumber,_name,_email,"10938",_password,mobileNumber,timestamp.toString(),addDays(timestamp,30).toString(),true,2.3f,20f);
                            Toast.makeText(SignupActivity.this,"Account Created Successfully",Toast.LENGTH_SHORT).show();
 
 
@@ -130,8 +130,8 @@ public class SignupActivity extends AppCompatActivity {
 
 
     }
-    public void writeData(String uid, String accountNumber,String name, String email, String planId, String mobileNumber, String cycleStartDate, String cycleEndDate, Boolean billPaid, Float dataRemaining,Float maxData){
-        Customer customer=new Customer(accountNumber,name,email,planId,mobileNumber,cycleStartDate,cycleEndDate,billPaid,dataRemaining,maxData);
+    public void writeData(String uid, String accountNumber,String name, String email,String planId,String password,String mobileNumber,String cycleStartDate, String cycleEndDate, Boolean billPaid, Float dataRemaining,Float maxData){
+        Customer customer=new Customer(accountNumber,name,email,planId,password,mobileNumber,cycleStartDate,cycleEndDate,billPaid,dataRemaining,maxData);
         mDatabase.child("accountInfo").child(uid).setValue(customer);
 
     }

@@ -55,8 +55,8 @@ public class ProfileFragment extends Fragment {
         titleAccountnumber=view.findViewById(R.id.titleAccountnumber);
         name=view.findViewById(R.id.name);
         email=view.findViewById(R.id.email);
-       // password=view.findViewById(R.id.password);
         accountNumber=view.findViewById(R.id.accountNumber);
+        password=view.findViewById(R.id.password);
 
         getData(mDatabase,uid);
 
@@ -80,7 +80,7 @@ public class ProfileFragment extends Fragment {
                     name.setText(customer.getName());
                     email.setText(customer.getEmail());
                     accountNumber.setText(customer.getAccountNumber());
-
+                    password.setText(customer.getPassword());
                     titleName.setText(customer.getName());
                     titleAccountnumber.setText(customer.getAccountNumber());
 
