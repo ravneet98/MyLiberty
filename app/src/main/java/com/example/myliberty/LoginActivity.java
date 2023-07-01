@@ -76,12 +76,12 @@ public class LoginActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
                         if(task.isSuccessful()){
 
-                            Toast.makeText(getApplicationContext(),"Login Successfully",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Login Successfull",Toast.LENGTH_SHORT).show();
                             Intent i =new Intent(getApplicationContext(),MainActivity.class);
                             startActivity(i);
                         }
                         else{
-                            Toast.makeText(getApplicationContext(),"Account Creation failed",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Login failed",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
