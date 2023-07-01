@@ -7,16 +7,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.example.myliberty.Adapter.messageAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.myliberty.Adapter.planAdapter;
 import com.example.myliberty.Adapter.supportAdapter;
+import com.example.myliberty.Models.Message;
 import com.example.myliberty.Models.Plan;
 import com.example.myliberty.Models.SupportQueries;
 import com.google.firebase.database.DataSnapshot;
@@ -28,53 +27,38 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
-public class SupportFragment extends Fragment {
+public class MessageFragment extends Fragment {
 
     RecyclerView recyclerView;
     DatabaseReference mDatabase;
-    supportAdapter supportAdapter;
-    ArrayList<SupportQueries> supportQueries;
-    ImageButton message;
-
-    public SupportFragment() {
-        // Required empty public constructor
-    }
+    messageAdapter messageAdapter;
+    ArrayList<Message> messages;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_support, container, false);
-        recyclerView=view.findViewById(R.id.query_view);
-        message=view.findViewById(R.id.message);
-        mDatabase= FirebaseDatabase.getInstance().getReference("queries");
+        View view= inflater.inflate(R.layout.fragment_message, container, false);
+        recyclerView=view.findViewById(R.id.messageView);
+
+        mDatabase= FirebaseDatabase.getInstance().getReference("messages");
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        supportQueries=new ArrayList<>();
-        supportAdapter=new supportAdapter(getContext(),supportQueries);
-        recyclerView.setAdapter(supportAdapter);
-        message.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MessageFragment messageFragment=new MessageFragment();
+        messages=new ArrayList<>();
+        messageAdapter=new messageAdapter(getContext(),messages);
+        recyclerView.setAdapter(messageAdapter);
 
-                FragmentTransaction fragmentTransaction = getActivity()
-                        .getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.flFragment, messageFragment);
-                fragmentTransaction.commit();
-            }
-        });
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    SupportQueries query=dataSnapshot.getValue(SupportQueries.class);
+                    Message message=dataSnapshot.getValue(Message.class);
+                    messages.add(message);
 
 
-                    supportQueries.add(query);
                 }
-                supportAdapter.notifyDataSetChanged();
+                messageAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -87,4 +71,4 @@ public class SupportFragment extends Fragment {
 
         return view;
     }
-}
+    }

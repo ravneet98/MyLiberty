@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:text="Hi!"
+            android:text="Hey there!"
             android:textColor="@color/green"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -102,9 +102,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="40dp"
-            android:background="@drawable/square_background"
+            android:background="@drawable/plan_item_background"
             android:orientation="vertical"
             android:padding="10dp"
+
           >
 
             <TextView
@@ -157,10 +158,11 @@
                     android:id="@+id/upgrade"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
+                    android:layout_margin="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_background"
                     android:text="Upgrade"
+                    android:elevation="10dp"
                     android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>
