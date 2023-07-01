@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".PlansFragment">
+    tools:context=".MessageFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:padding="10dp"
-            android:text="Plans"
+            android:text="Messages"
             android:textColor="@color/green"
             android:textSize="40sp"
             android:textStyle="bold"
@@ -25,7 +25,7 @@
             />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/plans_view"
+            android:id="@+id/messageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

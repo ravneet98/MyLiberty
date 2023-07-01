@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myliberty.Models.Customer;
+import com.example.myliberty.Utils.dateToDaysUtility;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -66,10 +68,15 @@ public class HomeFragment extends Fragment {
     totalData=view.findViewById(R.id.totalData);
     upgrade=view.findViewById(R.id.upgrade);
     semiCircleArcProgressBar=view.findViewById(R.id.dataRemainingProgressArc);
+
     upgrade.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Toast.makeText(getContext(),"Upgrade",Toast.LENGTH_SHORT).show();
+
+            FragmentTransaction fragmentTransaction = getActivity()
+                    .getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.flFragment, new PlansFragment());
+            fragmentTransaction.commit();
         }
     });
     getData(mDatabase,uid);
@@ -96,7 +103,7 @@ public class HomeFragment extends Fragment {
                     remainingData.setText(customer.getDataRemaining().toString()+"GB");
                     minData.setText("0GB");
                     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                    String days=calculateDifference(customer.getCycleEndDate(), timestamp.toString(), "days").toString();
+                    String days= dateToDaysUtility.calculateDifference(customer.getCycleEndDate(), timestamp.toString(), "days").toString();
 
                     daysRemaining.setText(days+" days remaining in the billing cycle");
                     maxData.setText(customer.getMaxData().toString()+"GB");
@@ -109,29 +116,5 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-    private Long calculateDifference(String cycleEndDate, String cycleStartDate, String value) {
-        Timestamp date_1 = stringToTimestamp(cycleEndDate);
-        Timestamp date_2 = stringToTimestamp(cycleStartDate);
-        long milliseconds = date_1.getTime() - date_2.getTime();
-        if (value.equals("second"))
-            return milliseconds / 1000;
-        if (value.equals("minute"))
-            return milliseconds / 1000 / 60;
-        if (value.equals("hours"))
-            return milliseconds / 1000 / 3600;
-        if (value.equals("days"))
-            return milliseconds / 1000 / 3600/24;
 
-        return 99999L;
-    }
-
-    private Timestamp stringToTimestamp(String date) {
-        try {
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date parsedDate = dateFormat.parse(date);
-            return new Timestamp(parsedDate.getTime());
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }

@@ -37,6 +37,10 @@ public class LoginActivity extends AppCompatActivity {
         signup=findViewById(R.id.signup);
         forgetPassword=findViewById(R.id.forgetPassword);
         progressBar=findViewById(R.id.progressBar);
+        if (mAuth.getCurrentUser() != null ) {
+            finish();
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        }
         forgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
