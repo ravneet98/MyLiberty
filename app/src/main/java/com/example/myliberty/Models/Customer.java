@@ -9,6 +9,7 @@ public Customer(){
     public String name;
     public String email;
     public String planId;
+    public String password;
     public String mobileNumber;
     public String cycleStartDate;
     public String cycleEndDate;
@@ -46,6 +47,14 @@ public Customer(){
 
     public void setPlanId(String planId) {
         this.planId = planId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getMobileNumber() {
@@ -96,11 +105,12 @@ public Customer(){
         this.maxData = maxData;
     }
 
-    public Customer(String accountNumber, String name, String email, String planId, String mobileNumber, String cycleStartDate, String cycleEndDate, Boolean billPaid, Float dataRemaining, Float maxData) {
+    public Customer(String accountNumber, String name, String email, String planId,String password, String mobileNumber, String cycleStartDate, String cycleEndDate, Boolean billPaid, Float dataRemaining, Float maxData) {
         this.accountNumber = accountNumber;
         this.name = name;
         this.email = email;
         this.planId = planId;
+        this.password=password;
         this.mobileNumber = mobileNumber;
         this.cycleStartDate = cycleStartDate;
         this.cycleEndDate = cycleEndDate;
