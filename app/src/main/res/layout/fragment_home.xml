@@ -6,7 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment"
    >
-
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background" />
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
@@ -22,8 +29,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
+            android:layout_marginTop="15dp"
             android:text="Hey there!"
-            android:textColor="@color/green"
+            android:textColor="@color/white"
             android:textSize="40sp"
             android:textStyle="bold" />
 
@@ -31,7 +39,7 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:layout_marginTop="10dp"
             android:textColor="@color/light_green"
             android:textSize="40sp" />
 
@@ -104,7 +112,9 @@
             android:layout_marginTop="40dp"
             android:background="@drawable/plan_item_background"
             android:orientation="vertical"
-            android:padding="10dp"
+            android:padding="20dp"
+            android:elevation="10dp"
+
 
           >
 
@@ -162,7 +172,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_background"
                     android:text="Upgrade"
-                    android:elevation="10dp"
+
                     android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>

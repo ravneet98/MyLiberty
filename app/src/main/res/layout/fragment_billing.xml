@@ -5,6 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BillingFragment">
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background"
+       />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:text="Billing"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:textStyle="bold"
+
+            />
+
+
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -13,7 +41,8 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="15dp"
-        android:background="@drawable/square_background"
+        android:background="@drawable/plan_item_background"
+        android:elevation="10dp"
         android:orientation="vertical"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,17 +54,34 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ravneet Singh"
+            android:text=""
             android:textColor="@color/green"
             android:textSize="25sp" />
 
-        <TextView
-            android:id="@+id/accountNumber"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Account Number : 123456789"
-            android:textColor="@color/dark"
-            android:textSize="20sp" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Account Number:"
+                android:layout_weight="1"
+                android:textColor="@color/dark"
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/accountNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_weight="4"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+
 
     </LinearLayout>
 
@@ -68,19 +114,20 @@
                     android:textColor="@color/dark"
                     android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/paymentLastDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="June 4, 2023"
-                    android:textColor="@color/dark"
-                    android:textSize="15sp" />
+
 
                 <TextView
                     android:id="@+id/textView12"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Payment Required by:"
+                    android:text="Payment Required in:"
+                    android:textColor="@color/dark"
+                    android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/paymentLastDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
                     android:textColor="@color/dark"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -90,7 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="$0.00"
+                android:text=""
                 android:textAlignment="textEnd"
                 android:textColor="@color/light_green"
                 android:textSize="40sp" />
@@ -114,7 +161,19 @@
             android:layout_weight="1"
             android:background="@drawable/button_background"
             android:text="Make Payment"
-            android:textColor="@color/white" />
+           android:enabled="false"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
     </LinearLayout>
 
+    <com.stripe.android.view.CardInputWidget
+        android:id="@+id/cardInputWidget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -111,7 +111,7 @@ public class SignupActivity extends AppCompatActivity {
                             String mobileNumber=mobile_account.get(_accountNumber);
                             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-                            writeData(uid,_accountNumber,_name,_email,"10938",_password,mobileNumber,timestamp.toString(),addDays(timestamp,30).toString(),true,2.3f,20f);
+                            writeData(uid,_accountNumber,_name,_email,"31424",_password,mobileNumber,timestamp.toString(),addDays(timestamp,30).toString(),true,2.3f,20f);
                            Toast.makeText(SignupActivity.this,"Account Created Successfully",Toast.LENGTH_SHORT).show();
 
 

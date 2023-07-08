@@ -10,7 +10,7 @@ public class SupportQueries {
     String status;
     String requestedBy;
 
-    public SupportQueries(String qid, String query, String solution, Boolean isSolved, String createdDate, String solutionDate, String status, String requestedBy) {
+    public SupportQueries(String qid, String query, String solution, String createdDate, String solutionDate, String status, String requestedBy) {
         this.qid = qid;
         this.query = query;
         this.solution = solution;

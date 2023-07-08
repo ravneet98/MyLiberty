@@ -11,7 +11,7 @@ public class dateToDaysUtility {
     public static Long calculateDifference(String cycleEndDate, String cycleStartDate, String value) {
         Timestamp date_1 = stringToTimestamp(cycleEndDate);
         Timestamp date_2 = stringToTimestamp(cycleStartDate);
-        long milliseconds = date_2.getTime() - date_1.getTime();
+        long milliseconds = Math.abs(date_2.getTime() - date_1.getTime());
         if (value.equals("second"))
             return milliseconds / 1000;
         if (value.equals("minute"))
@@ -26,7 +26,7 @@ public class dateToDaysUtility {
     public static Long calculateDifference(String cycleStartDate, String value) {
         Timestamp date_1 = new Timestamp(System.currentTimeMillis());
         Timestamp date_2 = stringToTimestamp(cycleStartDate);
-        long milliseconds = date_1.getTime() - date_2.getTime();
+        long milliseconds = Math.abs(date_1.getTime() - date_2.getTime());
 
         if (value.equals("second"))
             return milliseconds / 1000;
