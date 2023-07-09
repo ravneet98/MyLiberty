@@ -1,6 +1,7 @@
 package com.example.myliberty;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,17 +13,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myliberty.Models.Customer;
 import com.example.myliberty.Models.Plan;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Timestamp;
@@ -30,17 +35,25 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ProfileFragment extends Fragment {
+
     View view;
-    TextView name,email,password,accountNumber,titleName,titleAccountnumber;
+    EditText name,password;
+    TextView titleName,titleAccountnumber,email,accountNumber;
+
     Button updateprofile;
-    String uid;
+
+    String _name,_password;
     Customer customer;
-    private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+    String uid=mAuth.getUid();
+
     public ProfileFragment() {
         // Required empty public constructor
 
     }
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -57,8 +70,21 @@ public class ProfileFragment extends Fragment {
         email=view.findViewById(R.id.email);
         accountNumber=view.findViewById(R.id.accountNumber);
         password=view.findViewById(R.id.password);
+        updateprofile=view.findViewById(R.id.editprofile);
 
         getData(mDatabase,uid);
+
+        updateprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isNamechanged(mDatabase, uid) || isPasswordchanged(mDatabase, uid)) {
+                    Toast.makeText(getContext(), "Data has been updated", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "Data is same and cannot be updated", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
 
         return view;
@@ -73,10 +99,9 @@ public class ProfileFragment extends Fragment {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
-                    customer=task.getResult().getValue(Customer.class);
-                   // assert customer != null;
+                } else {
+                    customer = task.getResult().getValue(Customer.class);
+                    //assert customer != null;
                     name.setText(customer.getName());
                     email.setText(customer.getEmail());
                     accountNumber.setText(customer.getAccountNumber());
@@ -91,5 +116,31 @@ public class ProfileFragment extends Fragment {
 
     }
 
-}
+    private boolean isPasswordchanged(DatabaseReference mDatabase, String uid) {
 
+        _password = customer.getPassword();
+        if (!_password.equals(password.getText().toString())) {
+
+            mDatabase.child("accountInfo").child(uid).child("password").setValue(password.getText().toString());
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+
+    private boolean isNamechanged(DatabaseReference mDatabase, String uid) {
+
+        _name = customer.getName();
+        if (!_name.equals(name.getText().toString())) {
+
+            mDatabase.child("accountInfo").child(uid).child("name").setValue(name.getText().toString());
+            return true;
+
+        } else {
+            return false;
+        }
+
+    }
+
+}
