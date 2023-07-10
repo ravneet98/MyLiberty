@@ -65,13 +65,11 @@ public class ProfileFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         uid=mAuth.getUid();
-        titleName=view.findViewById(R.id.titleName);
-        titleAccountnumber=view.findViewById(R.id.titleAccountnumber);
         name=view.findViewById(R.id.name);
         email=view.findViewById(R.id.email);
         accountNumber=view.findViewById(R.id.accountNumber);
         password=view.findViewById(R.id.password);
-        updateprofile=view.findViewById(R.id.editprofile);
+      updateprofile=view.findViewById(R.id.editprofile);
 
         getData(mDatabase,uid);
 
@@ -114,9 +112,7 @@ public class ProfileFragment extends Fragment {
                     name.setText(customer.getName());
                     email.setText(customer.getEmail());
                     accountNumber.setText(customer.getAccountNumber());
-                    password.setText(customer.getPassword());
-                    titleName.setText(customer.getName());
-                    titleAccountnumber.setText(customer.getAccountNumber());
+
 
                 }
             }
@@ -127,7 +123,7 @@ public class ProfileFragment extends Fragment {
 
     private boolean isPasswordchanged(DatabaseReference mDatabase, String uid) {
 
-        _password = customer.getPassword();
+
         if (!_password.equals(password.getText().toString())) {
 
             if(!TextUtils.isEmpty(password.getText().toString())){
@@ -167,6 +163,11 @@ public class ProfileFragment extends Fragment {
         }else{
             return false;
         }
+
+
+    }
+    public void changePassword(String oldPassword, String newPassword){
+     //  mAuth.up
 
     }
 

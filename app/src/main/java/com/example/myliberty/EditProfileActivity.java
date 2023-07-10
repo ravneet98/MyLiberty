@@ -105,7 +105,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     name.setText(customer.getName());
                     email.setText(customer.getEmail());
                     accountNumber.setText(customer.getAccountNumber());
-                    password.setText(customer.getPassword());
+
 
                 }
             }
