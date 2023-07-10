@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,7 +90,7 @@ public class ProfileFragment extends Fragment {
                     Toast.makeText(getContext(), "Password has been updated", Toast.LENGTH_LONG).show();
                 }
                 else{
-                    Toast.makeText(getContext(), "Data is same and cannot be updated", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Data update failed, data is either same or not valid", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -129,10 +130,19 @@ public class ProfileFragment extends Fragment {
         _password = customer.getPassword();
         if (!_password.equals(password.getText().toString())) {
 
-            mDatabase.child("accountInfo").child(uid).child("password").setValue(password.getText().toString());
-            return true;
-
-        } else {
+            if(!TextUtils.isEmpty(password.getText().toString())){
+                if(password.getText().toString().length()>=6){
+                    mDatabase.child("accountInfo").child(uid).child("password").setValue(password.getText().toString());
+                    return true;
+                }else{
+                    Toast.makeText(getContext(), "Length of password must be a minimum of 6", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            }else{
+                Toast.makeText(getContext(), "Password cannot be empty", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }else{
             return false;
         }
     }
@@ -142,10 +152,19 @@ public class ProfileFragment extends Fragment {
         _name = customer.getName();
         if (!_name.equals(name.getText().toString())) {
 
-            mDatabase.child("accountInfo").child(uid).child("name").setValue(name.getText().toString());
-            return true;
-
-        } else {
+            if(!TextUtils.isEmpty(name.getText().toString())){
+                if(name.getText().toString().length()>=6){
+                    mDatabase.child("accountInfo").child(uid).child("name").setValue(name.getText().toString());
+                    return true;
+                }else{
+                    Toast.makeText(getContext(), "Length of name must be a minimum of 6", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            }else{
+                Toast.makeText(getContext(), "Name cannot be empty", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }else{
             return false;
         }
 
