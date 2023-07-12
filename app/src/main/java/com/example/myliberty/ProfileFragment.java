@@ -65,13 +65,11 @@ public class ProfileFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         uid=mAuth.getUid();
-        titleName=view.findViewById(R.id.titleName);
-        titleAccountnumber=view.findViewById(R.id.titleAccountnumber);
         name=view.findViewById(R.id.name);
         email=view.findViewById(R.id.email);
         accountNumber=view.findViewById(R.id.accountNumber);
         password=view.findViewById(R.id.password);
-        updateprofile=view.findViewById(R.id.editprofile);
+      updateprofile=view.findViewById(R.id.editprofile);
 
         getData(mDatabase,uid);
 
@@ -80,14 +78,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
 
                 if (isNamechanged(mDatabase, uid) ) {
-                    if(isPasswordchanged(mDatabase, uid)){
-                        Toast.makeText(getContext(), "Name and Password has been updated", Toast.LENGTH_LONG).show();
-                    }
-                    else{
-                        Toast.makeText(getContext(), "Name has been updated", Toast.LENGTH_LONG).show();
-                    }
-                } else if(isPasswordchanged(mDatabase, uid)) {
-                    Toast.makeText(getContext(), "Password has been updated", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Name has been updated", Toast.LENGTH_LONG).show();
                 }
                 else{
                     Toast.makeText(getContext(), "Data update failed, data is either same or not valid", Toast.LENGTH_LONG).show();
@@ -114,9 +105,7 @@ public class ProfileFragment extends Fragment {
                     name.setText(customer.getName());
                     email.setText(customer.getEmail());
                     accountNumber.setText(customer.getAccountNumber());
-                    password.setText(customer.getPassword());
-                    titleName.setText(customer.getName());
-                    titleAccountnumber.setText(customer.getAccountNumber());
+
 
                 }
             }
@@ -125,9 +114,9 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    private boolean isPasswordchanged(DatabaseReference mDatabase, String uid) {
+  /*  private boolean isPasswordchanged(DatabaseReference mDatabase, String uid) {
 
-        _password = customer.getPassword();
+
         if (!_password.equals(password.getText().toString())) {
 
             if(!TextUtils.isEmpty(password.getText().toString())){
@@ -145,7 +134,7 @@ public class ProfileFragment extends Fragment {
         }else{
             return false;
         }
-    }
+    }*/
 
     private boolean isNamechanged(DatabaseReference mDatabase, String uid) {
 
@@ -167,6 +156,11 @@ public class ProfileFragment extends Fragment {
         }else{
             return false;
         }
+
+
+    }
+    public void changePassword(String oldPassword, String newPassword){
+     //  mAuth.up
 
     }
 
