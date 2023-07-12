@@ -78,14 +78,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
 
                 if (isNamechanged(mDatabase, uid) ) {
-                    if(isPasswordchanged(mDatabase, uid)){
-                        Toast.makeText(getContext(), "Name and Password has been updated", Toast.LENGTH_LONG).show();
-                    }
-                    else{
-                        Toast.makeText(getContext(), "Name has been updated", Toast.LENGTH_LONG).show();
-                    }
-                } else if(isPasswordchanged(mDatabase, uid)) {
-                    Toast.makeText(getContext(), "Password has been updated", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Name has been updated", Toast.LENGTH_LONG).show();
                 }
                 else{
                     Toast.makeText(getContext(), "Data update failed, data is either same or not valid", Toast.LENGTH_LONG).show();
@@ -121,7 +114,7 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    private boolean isPasswordchanged(DatabaseReference mDatabase, String uid) {
+  /*  private boolean isPasswordchanged(DatabaseReference mDatabase, String uid) {
 
 
         if (!_password.equals(password.getText().toString())) {
@@ -141,7 +134,7 @@ public class ProfileFragment extends Fragment {
         }else{
             return false;
         }
-    }
+    }*/
 
     private boolean isNamechanged(DatabaseReference mDatabase, String uid) {
 
