@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,9 @@ import com.example.myliberty.Models.Plan;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,6 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.auth.User;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -38,13 +43,14 @@ import java.util.Date;
 public class ProfileFragment extends Fragment {
 
     View view;
-    EditText name,password;
-    TextView titleName,titleAccountnumber,email,accountNumber;
+    EditText name,password,newPassword,newPassword2;
+    TextView email,accountNumber;
 
-    Button updateprofile;
+    Button updateprofile,changePasswordBtn,backbtn,changePasswordBtn2;
 
     String _name,_password;
     Customer customer;
+    LinearLayout add_password_layout,linearLayout1;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();;
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -65,13 +71,49 @@ public class ProfileFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         uid=mAuth.getUid();
+        add_password_layout=view.findViewById(R.id.add_query_layout);
+        linearLayout1 = view.findViewById(R.id.linearLayout1);
         name=view.findViewById(R.id.name);
         email=view.findViewById(R.id.email);
         accountNumber=view.findViewById(R.id.accountNumber);
-        password=view.findViewById(R.id.password);
-      updateprofile=view.findViewById(R.id.editprofile);
+        password=view.findViewById(R.id.currentPassword);
+        updateprofile=view.findViewById(R.id.editprofile);
+        changePasswordBtn=view.findViewById(R.id.changePasswordBtn);
+        changePasswordBtn2=view.findViewById(R.id.changePasswordBtn2);
+        newPassword=view.findViewById(R.id.newPassword1);
+        newPassword2=view.findViewById(R.id.newPassword2);
+        backbtn=view.findViewById(R.id.back);
 
         getData(mDatabase,uid);
+
+        changePasswordBtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updatePassword();
+            }
+        });
+
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(linearLayout1.getVisibility()==View.GONE){
+                    add_password_layout.setVisibility(View.GONE);
+                    linearLayout1.setVisibility(View.VISIBLE);
+
+                }
+            }
+        });
+
+        changePasswordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(add_password_layout.getVisibility()==View.GONE){
+                    linearLayout1.setVisibility(View.GONE);
+                    add_password_layout.setVisibility(View.VISIBLE);
+
+                }
+            }
+        });
 
         updateprofile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,27 +156,31 @@ public class ProfileFragment extends Fragment {
 
     }
 
-  /*  private boolean isPasswordchanged(DatabaseReference mDatabase, String uid) {
-
-
-        if (!_password.equals(password.getText().toString())) {
-
-            if(!TextUtils.isEmpty(password.getText().toString())){
-                if(password.getText().toString().length()>=6){
-                    mDatabase.child("accountInfo").child(uid).child("password").setValue(password.getText().toString());
-                    return true;
+    private void updatePassword(){
+        final String Email= mAuth.getCurrentUser().getEmail();
+        if(mAuth.getCurrentUser()!=null){
+            AuthCredential credential= EmailAuthProvider.getCredential(Email,password.getText().toString());
+            mAuth.getCurrentUser().reauthenticate(credential).addOnCompleteListener((task)->{
+                if(task.isSuccessful()){
+                    if(newPassword.getText().toString().equals(newPassword2.getText().toString())) {
+                        mAuth.getCurrentUser().updatePassword(newPassword.getText().toString()).addOnCompleteListener((task2) -> {
+                            if (task2.isSuccessful()) {
+                                Toast.makeText(getContext(), "Password Updated", Toast.LENGTH_LONG).show();
+                                password.setText("");
+                                newPassword.setText("");
+                            } else {
+                                Toast.makeText(getContext(), "Password update failed", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }else{
+                        Toast.makeText(getContext(), "Password does not match, please try again", Toast.LENGTH_LONG).show();
+                    }
                 }else{
-                    Toast.makeText(getContext(), "Length of password must be a minimum of 6", Toast.LENGTH_LONG).show();
-                    return false;
+                    Toast.makeText(getContext(), "Invalid current user", Toast.LENGTH_LONG).show();
                 }
-            }else{
-                Toast.makeText(getContext(), "Password cannot be empty", Toast.LENGTH_LONG).show();
-                return false;
-            }
-        }else{
-            return false;
+            });
         }
-    }*/
+    }
 
     private boolean isNamechanged(DatabaseReference mDatabase, String uid) {
 
@@ -157,10 +203,6 @@ public class ProfileFragment extends Fragment {
             return false;
         }
 
-
-    }
-    public void changePassword(String oldPassword, String newPassword){
-     //  mAuth.up
 
     }
 

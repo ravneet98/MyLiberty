@@ -42,7 +42,7 @@
             />
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -186,7 +186,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout2"
+            android:id="@+id/add_query_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -215,7 +215,7 @@
                 android:layout_marginTop="12dp"
                 android:background="@drawable/editext_background"
                 android:ems="10"
-                android:hint="*********"
+                android:hint="******"
                 android:inputType="textPassword"
                 android:padding="12dp"
                 android:textColor="#707070"
@@ -264,7 +264,7 @@
                 android:layout_marginTop="12dp"
                 android:background="@drawable/editext_background"
                 android:ems="10"
-                android:hint=""
+                android:hint="******"
                 android:inputType="textPassword"
                 android:padding="12dp"
                 android:textColor="#111111" />
@@ -327,7 +327,6 @@
 
 
         </LinearLayout>
-
 
 
     </LinearLayout>
