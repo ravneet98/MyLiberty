@@ -29,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 public class SignupActivity extends AppCompatActivity {
     private EditText name;
@@ -39,6 +40,13 @@ public class SignupActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
     private DatabaseReference mDatabase;
+
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    "(?=.*[@#$%^&+=])" +     // at least 1 special character
+                    "(?=\\S+$)" +            // no white spaces
+                    ".{8,16}" +                // at least 8 characters and maximum of 16 characters
+                    "$");
     HashMap<String, String>  mobile_account = new HashMap<String, String>();
 
 
@@ -96,8 +104,8 @@ public class SignupActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
-                if(TextUtils.isEmpty(_password)||_password.length()<6){
-                    Toast.makeText(SignupActivity.this,"Password length must be more than 6 ",Toast.LENGTH_SHORT).show();
+                if(!isPasswordValid(password)){
+                    Toast.makeText(SignupActivity.this,"Please enter a valid password",Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
@@ -138,6 +146,26 @@ public class SignupActivity extends AppCompatActivity {
 
     public static boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+    }
+
+    private boolean isPasswordValid(EditText password){
+
+        if (password.getText().toString().isEmpty()) {
+            password.setError("Field can not be empty");
+            return false;
+        }
+
+        // if password does not matches to the pattern
+        // it will display an error message "Password is too weak"
+        else if (!PASSWORD_PATTERN.matcher(password.getText().toString()).matches()) {
+            password.setError("Password is not valid it should have at least 1 special " +
+                    "character, no white spaces, and number of characters must be in the range of 8-16");
+            return false;
+        } else {
+            password.setError(null);
+            return true;
+        }
+
     }
     public static Timestamp addDays(Timestamp date, int days) {
         Calendar cal = Calendar.getInstance();
