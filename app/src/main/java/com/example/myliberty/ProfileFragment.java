@@ -39,6 +39,7 @@ import com.google.firebase.firestore.auth.User;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 public class ProfileFragment extends Fragment {
 
@@ -48,7 +49,13 @@ public class ProfileFragment extends Fragment {
 
     Button updateprofile,changePasswordBtn,backbtn,changePasswordBtn2;
 
-    String _name,_password;
+    String _name;
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    "(?=.*[@#$%^&+=])" +     // at least 1 special character
+                    "(?=\\S+$)" +            // no white spaces
+                    ".{8,16}" +                // at least 8 characters and maximum of 16 characters
+                    "$");
     Customer customer;
     LinearLayout add_password_layout,linearLayout1;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();;
@@ -123,7 +130,7 @@ public class ProfileFragment extends Fragment {
                     Toast.makeText(getContext(), "Name has been updated", Toast.LENGTH_LONG).show();
                 }
                 else{
-                    Toast.makeText(getContext(), "Data update failed, data is either same or not valid", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Update failed, Name is either same or not valid", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -158,27 +165,38 @@ public class ProfileFragment extends Fragment {
 
     private void updatePassword(){
         final String Email= mAuth.getCurrentUser().getEmail();
-        if(mAuth.getCurrentUser()!=null){
-            AuthCredential credential= EmailAuthProvider.getCredential(Email,password.getText().toString());
-            mAuth.getCurrentUser().reauthenticate(credential).addOnCompleteListener((task)->{
-                if(task.isSuccessful()){
-                    if(newPassword.getText().toString().equals(newPassword2.getText().toString())) {
-                        mAuth.getCurrentUser().updatePassword(newPassword.getText().toString()).addOnCompleteListener((task2) -> {
-                            if (task2.isSuccessful()) {
-                                Toast.makeText(getContext(), "Password Updated", Toast.LENGTH_LONG).show();
-                                password.setText("");
-                                newPassword.setText("");
-                            } else {
-                                Toast.makeText(getContext(), "Password update failed", Toast.LENGTH_LONG).show();
+        if(!TextUtils.isEmpty(password.getText().toString())) {
+            if (mAuth.getCurrentUser() != null) {
+                AuthCredential credential = EmailAuthProvider.getCredential(Email, password.getText().toString());
+                mAuth.getCurrentUser().reauthenticate(credential).addOnCompleteListener((task) -> {
+                    if (task.isSuccessful()) {
+                        if (newPassword.getText().toString().equals(newPassword2.getText().toString())) {
+                            if (!password.getText().toString().equals(newPassword2.getText().toString())) {
+                                if (isPasswordValid(newPassword,newPassword2)) {
+                                    mAuth.getCurrentUser().updatePassword(newPassword.getText().toString()).addOnCompleteListener((task2) -> {
+                                        if (task2.isSuccessful()) {
+                                            Toast.makeText(getContext(), "Password Updated", Toast.LENGTH_LONG).show();
+                                            password.setText("");
+                                            newPassword.setText("");
+                                        } else {
+                                            Toast.makeText(getContext(), "Password update failed", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            }else{
+                                Toast.makeText(getContext(), "New password and current password cannot be same", Toast.LENGTH_LONG).show();
                             }
-                        });
-                    }else{
-                        Toast.makeText(getContext(), "Password does not match, please try again", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getContext(), "New password does not match, please try again", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(getContext(), "Current password is incorrect", Toast.LENGTH_LONG).show();
                     }
-                }else{
-                    Toast.makeText(getContext(), "Invalid current user", Toast.LENGTH_LONG).show();
-                }
-            });
+                });
+            }
+        }else{
+            Toast.makeText(getContext(), "Current password cannot be empty", Toast.LENGTH_LONG).show();
+            password.setError("Field cannot be empty");
         }
     }
 
@@ -197,12 +215,34 @@ public class ProfileFragment extends Fragment {
                 }
             }else{
                 Toast.makeText(getContext(), "Name cannot be empty", Toast.LENGTH_LONG).show();
+                name.setError("Field cannot be empty");
                 return false;
             }
         }else{
             return false;
         }
 
+
+    }
+    private boolean isPasswordValid(EditText password, EditText newPassword2){
+
+        if (password.getText().toString().isEmpty()) {
+            password.setError("Field can not be empty");
+            return false;
+        }
+
+        // if password does not matches to the pattern
+        // it will display an error message "Password is too weak"
+        else if (!PASSWORD_PATTERN.matcher(password.getText().toString()).matches()) {
+            password.setError("Password is not valid it should have at least 1 special " +
+                    "character, no white spaces, and number of characters must be in the range of 8-16");
+            newPassword2.setError("Password is not valid it should have at least 1 special " +
+                    "character, no white spaces, and number of characters must be in the range of 8-16");
+            return false;
+        } else {
+            password.setError(null);
+            return true;
+        }
 
     }
 
