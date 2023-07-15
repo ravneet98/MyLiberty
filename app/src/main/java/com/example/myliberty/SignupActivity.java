@@ -94,8 +94,9 @@ public class SignupActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
-                if(TextUtils.isEmpty(_name)||_name.length()<6){
+                if(TextUtils.isEmpty(_name)||!name.getText().toString().matches("[a-zA-Z ]+")){
                     Toast.makeText(SignupActivity.this,"Please enter valid name",Toast.LENGTH_SHORT).show();
+                    name.setError("Name should not be empty and should contain only alphabetical characters");
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
@@ -156,7 +157,8 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         // if password does not matches to the pattern
-        // it will display an error message "Password is too weak"
+        // it will display an error message "Password is not valid it should have at least 1 special " +
+        //                    "character, no white spaces, and number of characters must be in the range of 8-16"
         else if (!PASSWORD_PATTERN.matcher(password.getText().toString()).matches()) {
             password.setError("Password is not valid it should have at least 1 special " +
                     "character, no white spaces, and number of characters must be in the range of 8-16");
