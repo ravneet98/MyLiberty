@@ -187,7 +187,7 @@ public class ProfileFragment extends Fragment {
                                 Toast.makeText(getContext(), "New password and current password cannot be same", Toast.LENGTH_LONG).show();
                             }
                         } else {
-                            Toast.makeText(getContext(), "New password does not match, please try again", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "Password confirmation failed, please try again", Toast.LENGTH_LONG).show();
                         }
                     } else {
                         Toast.makeText(getContext(), "Current password is incorrect", Toast.LENGTH_LONG).show();
@@ -206,11 +206,11 @@ public class ProfileFragment extends Fragment {
         if (!_name.equals(name.getText().toString())) {
 
             if(!TextUtils.isEmpty(name.getText().toString())){
-                if(name.getText().toString().length()>=6){
+                if(name.getText().toString().matches("[a-zA-Z ]+")){
                     mDatabase.child("accountInfo").child(uid).child("name").setValue(name.getText().toString());
                     return true;
                 }else{
-                    Toast.makeText(getContext(), "Length of name must be a minimum of 6", Toast.LENGTH_LONG).show();
+                    name.setError("Name should contain only alphabetical characters");
                     return false;
                 }
             }else{
@@ -232,7 +232,8 @@ public class ProfileFragment extends Fragment {
         }
 
         // if password does not matches to the pattern
-        // it will display an error message "Password is too weak"
+        // it will display an error message "Password is not valid it should have at least 1 special " +
+        //                    "character, no white spaces, and number of characters must be in the range of 8-16"
         else if (!PASSWORD_PATTERN.matcher(password.getText().toString()).matches()) {
             password.setError("Password is not valid it should have at least 1 special " +
                     "character, no white spaces, and number of characters must be in the range of 8-16");
