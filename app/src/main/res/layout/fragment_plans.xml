@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".PlansFragment">
+    tools:context=".PlansFragment"
+  >
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
@@ -12,7 +13,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/background" />
+        app:srcCompat="@drawable/background"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,8 +40,107 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:visibility="visible"
 
             />
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/upgradeDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:background="@drawable/upgrade_layout_background"
+        android:padding="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:animateLayoutChanges="true"
+        android:elevation="20dp"
+        >
 
+        <TextView
+            android:id="@+id/planName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="xxxxxx"
+            android:padding="5dp"
+            android:textColor="@color/dark"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/planType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="xxxxxx"
+            android:padding="5dp"
+            android:textColor="@color/dark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/planCost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="xxxxxx"
+            android:padding="5dp"
+            android:textAlignment="center"
+            android:textColor="@color/dark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/planSpeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="xxxxxx"
+            android:padding="5dp"
+            android:textColor="@color/dark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/planData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="xxxxxx"
+            android:padding="5dp"
+            android:textColor="@color/dark"
+            android:textSize="18sp"
+           />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+
+
+            android:padding="10dp">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/cancel"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/red_button"
+                android:text="Cancel"
+                android:elevation="10dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                android:textColor="@color/white" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/upgrade"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/button_background_light_green"
+                android:text="Upgrade"
+                android:elevation="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </LinearLayout>
 </FrameLayout>

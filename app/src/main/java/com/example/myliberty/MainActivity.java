@@ -8,20 +8,43 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.paypal.checkout.PayPalCheckout;
+import com.paypal.checkout.config.CheckoutConfig;
+import com.paypal.checkout.config.Environment;
+import com.paypal.checkout.config.PaymentButtonIntent;
+import com.paypal.checkout.config.SettingsConfig;
+import com.paypal.checkout.config.UIConfig;
+import com.paypal.checkout.createorder.CurrencyCode;
+import com.paypal.checkout.createorder.UserAction;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     BottomNavigationView bottomNavigationView;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        PayPalCheckout.setConfig(new CheckoutConfig(
+                getApplication(),
+                "AQUoNG5bje_mCjO9c1Qb_G3xiQxs-auBoxfi_NFMtfscDmaHXfcnGiWXfxlsXQ5XsrQH_bz5GBu_0IAU",
+                Environment.SANDBOX,
+                CurrencyCode.USD,
+                UserAction.PAY_NOW,
+                PaymentButtonIntent.CAPTURE,
+                new SettingsConfig(true, false),
+                new UIConfig(true),
+                BuildConfig.APPLICATION_ID + "://paypalpay"));
         bottomNavigationView
                 = findViewById(R.id.bottomNavigationView);
 
         bottomNavigationView
                 .setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.home);
+
     }
     HomeFragment homeFragment = new HomeFragment();
     BillingFragment  billingFragment = new BillingFragment();

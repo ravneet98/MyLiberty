@@ -1,10 +1,13 @@
 package com.example.myliberty.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myliberty.Models.Plan;
 import com.example.myliberty.Models.SupportQueries;
 import com.example.myliberty.R;
+import com.example.myliberty.Utils.dateToDaysUtility;
 
 import java.util.ArrayList;
 
@@ -32,12 +36,26 @@ public class supportAdapter extends RecyclerView.Adapter<supportAdapter.MyViewHo
         return new supportAdapter.MyViewHolder(v);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull supportAdapter.MyViewHolder holder, int position) {
         SupportQueries _supportQueries= supportQueries.get(position);
         holder.query.setText(_supportQueries.getQuery());
-        holder.solution.setText(_supportQueries.getSolution());
-        holder.isSolved.setText(_supportQueries.getStatus());
+
+        if(_supportQueries.getStatus().equals("completed")) {
+            holder.isSolved.setBackgroundResource(R.drawable.check);
+            holder.solution.setText(_supportQueries.getSolution());
+        }else {
+            holder.isSolved.setBackgroundResource(R.drawable.remove);
+            holder.solution.setText("yet to be solved");
+            holder.solution.setTypeface(null, Typeface.ITALIC);
+        }
+        if(_supportQueries.getStatus().equals("completed")) {
+            holder.datePosted.setText("Solved " + dateToDaysUtility.calculateDifference(_supportQueries.getSolutionDate().toString(), "days").toString() + " days ago");
+        }else{
+            holder.datePosted.setText("Created " + dateToDaysUtility.calculateDifference(_supportQueries.getCreatedDate().toString(), "days").toString() + " days ago");
+
+        }
 
 
     }
@@ -49,14 +67,15 @@ public class supportAdapter extends RecyclerView.Adapter<supportAdapter.MyViewHo
     }
 
     public static class MyViewHolder extends  RecyclerView.ViewHolder{
-        TextView query,solution,isSolved;
+        TextView query,solution,datePosted;
+        ImageView isSolved;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             query=itemView.findViewById(R.id.query);
             solution=itemView.findViewById(R.id.solution);
             isSolved=itemView.findViewById(R.id.isSolved);
-
+            datePosted=itemView.findViewById(R.id.datePosted);
 
         }
     }

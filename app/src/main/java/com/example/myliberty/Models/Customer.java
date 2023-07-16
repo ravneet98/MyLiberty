@@ -102,8 +102,15 @@ public Customer(){
         this.name = name;
         this.email = email;
         this.planId = planId;
-
         this.mobileNumber = mobileNumber;
+        this.cycleStartDate = cycleStartDate;
+        this.cycleEndDate = cycleEndDate;
+        this.billPaid = billPaid;
+        this.dataRemaining = dataRemaining;
+        this.maxData = maxData;
+    }
+    public Customer(String planId, String cycleStartDate, String cycleEndDate, Boolean billPaid, Float dataRemaining, Float maxData) {
+        this.planId = planId;
         this.cycleStartDate = cycleStartDate;
         this.cycleEndDate = cycleEndDate;
         this.billPaid = billPaid;

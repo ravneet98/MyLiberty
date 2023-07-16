@@ -120,7 +120,7 @@
                     android:id="@+id/textView12"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Payment Required in:"
+                    android:text="Payment Required by:"
                     android:textColor="@color/dark"
                     android:textSize="15sp" />
                 <TextView
@@ -140,6 +140,7 @@
                 android:text=""
                 android:textAlignment="textEnd"
                 android:textColor="@color/light_green"
+                android:textStyle="bold"
                 android:textSize="40sp" />
         </LinearLayout>
 
@@ -153,19 +154,19 @@
             android:layout_weight="1"
             android:background="#707070" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/makePayment"
+
+        <com.paypal.checkout.paymentbutton.PaymentButtonContainer
+            android:id="@+id/payment_button_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_background"
-            android:text="Make Payment"
-           android:enabled="false"
-            android:textColor="@color/white"
-            />
-    </LinearLayout>
+            android:layout_height="50dp"
+            android:visibility="gone"
+            app:paypal_button_color="silver"
+            app:paypal_button_label="pay"
+            app:paypal_button_shape="rounded"
+            app:paypal_button_size="large"
+            app:paypal_button_enabled="true" />
     </LinearLayout>
 
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

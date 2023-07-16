@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class dateToDaysUtility {
@@ -39,7 +40,7 @@ public class dateToDaysUtility {
 
         return 99999L;
     }
-    private static Timestamp stringToTimestamp(String date) {
+    public static Timestamp stringToTimestamp(String date) {
         try {
             @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date parsedDate = dateFormat.parse(date);
@@ -48,4 +49,12 @@ public class dateToDaysUtility {
             return null;
         }
     }
+    public static Timestamp addDays(Timestamp date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);// w ww.  j ava  2  s  .co m
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return new Timestamp(cal.getTime().getTime());
+
+    }
+
 }

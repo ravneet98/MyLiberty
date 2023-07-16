@@ -6,11 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myliberty.Models.Plan;
+import com.example.myliberty.PlansFragment;
 import com.example.myliberty.R;
 
 import java.util.ArrayList;
@@ -19,10 +21,13 @@ public class planAdapter extends RecyclerView.Adapter<planAdapter.MyViewHolder> 
 
     Context context;
     ArrayList<Plan> planList;
+    private View.OnClickListener onClickListener;
+    PlansFragment plansFragment;
 
-    public planAdapter(Context context, ArrayList<Plan> planList) {
+    public planAdapter(Context context, ArrayList<Plan> planList,PlansFragment plansFragment) {
         this.context = context;
         this.planList = planList;
+        this.plansFragment=plansFragment;
     }
 
     @NonNull
@@ -40,6 +45,14 @@ public class planAdapter extends RecyclerView.Adapter<planAdapter.MyViewHolder> 
         holder.planSpeed.setText(plan.getPlanSpeed()+"Mbps");
         holder.planType.setText(plan.getPlanType());
         holder.planCost.setText("$"+ plan.getPlanCost());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                    plansFragment.updatePlan(plan);
+
+            }
+        });
 
     }
 
