@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,7 @@ public class ProfileFragment extends Fragment {
     TextView email,accountNumber;
 
     Button updateprofile,changePasswordBtn,backbtn,changePasswordBtn2;
+    ImageButton logoutbutton;
 
     String _name;
     private static final Pattern PASSWORD_PATTERN =
@@ -82,6 +84,7 @@ public class ProfileFragment extends Fragment {
         linearLayout1 = view.findViewById(R.id.linearLayout1);
         name=view.findViewById(R.id.name);
         email=view.findViewById(R.id.email);
+        logoutbutton=view.findViewById(R.id.logoutbtn);
         accountNumber=view.findViewById(R.id.accountNumber);
         password=view.findViewById(R.id.currentPassword);
         updateprofile=view.findViewById(R.id.editprofile);
@@ -132,6 +135,16 @@ public class ProfileFragment extends Fragment {
                 else{
                     Toast.makeText(getContext(), "Update failed, Name is either same or not valid", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        logoutbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+                Toast.makeText(getContext(), "Logout Successful", Toast.LENGTH_LONG).show();
             }
         });
 
