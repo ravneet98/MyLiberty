@@ -54,13 +54,14 @@
                 android:padding="5dp"
                 android:background="@drawable/two_button_background_layout">
                 <ImageButton
-                    android:id="@+id/logout"
+                    android:id="@+id/logoutbtn"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:text="message"
                     android:src="@mipmap/ic_logout"
                     android:background="#85c485"
-                    android:layout_marginEnd="2dp"/>
+                    android:layout_marginEnd="2dp"
+                    android:contentDescription="TODO" />
 
 
             </LinearLayout>
