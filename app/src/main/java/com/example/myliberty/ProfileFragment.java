@@ -1,6 +1,7 @@
 package com.example.myliberty;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -144,6 +145,7 @@ public class ProfileFragment extends Fragment {
                 mAuth.signOut();
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);
+                getActivity().finish();
                 Toast.makeText(getContext(), "Logout Successful", Toast.LENGTH_LONG).show();
             }
         });
