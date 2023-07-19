@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.regex.Pattern;
+
 public class LoginActivity extends AppCompatActivity {
     EditText email;
     EditText password;
@@ -26,6 +28,12 @@ public class LoginActivity extends AppCompatActivity {
     TextView forgetPassword;
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    "(?=.*[@#$%^&+=])" +     // at least 1 special character
+                    "(?=\\S+$)" +            // no white spaces
+                    ".{8,16}" +                // at least 8 characters and maximum of 16 characters
+                    "$");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,13 +71,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-                if(!isValidEmail(_email)){
-                    Toast.makeText(getApplicationContext(),"Please enter valid email",Toast.LENGTH_SHORT).show();
+                if(!isValidEmail(_email,email)){
+                    Toast.makeText(getApplicationContext(),"Please enter a valid email",Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
-                if(TextUtils.isEmpty(_password)||_password.length()<6){
-                    Toast.makeText(getApplicationContext(),"Please enter valid password ",Toast.LENGTH_SHORT).show();
+                if(!isPasswordValid(password)){
+                    Toast.makeText(getApplicationContext(),"Please enter a valid password",Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
@@ -92,7 +100,39 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    public static boolean isValidEmail(CharSequence target) {
-        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+
+    private boolean isPasswordValid(EditText password){
+
+        if (password.getText().toString().isEmpty()) {
+            password.setError("Field can not be empty");
+            return false;
+        }
+
+        // if password does not matches to the pattern
+        // it will display an error message "Password is not valid it should have at least 1 special " +
+        //                    "character, no white spaces, and number of characters must be in the range of 8-16"
+        else if (!PASSWORD_PATTERN.matcher(password.getText().toString()).matches()) {
+            password.setError("Password is not valid it should have at least 1 special " +
+                    "character, no white spaces, and number of characters must be in the range of 8-16");
+            return false;
+        } else {
+            password.setError(null);
+            return true;
+        }
+
+    }
+    public static boolean isValidEmail(CharSequence target, EditText email) {
+        if(!TextUtils.isEmpty(target)){
+            if(Patterns.EMAIL_ADDRESS.matcher(target).matches()){
+                return true;
+            }
+            else{
+                email.setError("Email entered is not in correct format");
+                return false;
+            }
+        }else {
+            email.setError("Field cannot be empty");
+            return false;
+        }
     }
 }
