@@ -90,7 +90,8 @@ public class SignupActivity extends AppCompatActivity {
                 _accountNumber=String.valueOf(accountNumber.getText());
                 _name=String.valueOf(name.getText());
                 if(TextUtils.isEmpty(_accountNumber) || _accountNumber.length() != 9||!_accountNumber.matches("[0-9]+")){
-                    Toast.makeText(SignupActivity.this,"Please enter valid account Number",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignupActivity.this,"Please enter a valid account Number",Toast.LENGTH_SHORT).show();
+                    accountNumber.setError("Account number should not be empty and must contain only digits from 0-9 and length must be 9");
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
@@ -100,8 +101,8 @@ public class SignupActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
-                if(!isValidEmail(_email)){
-                    Toast.makeText(SignupActivity.this,"Please enter valid email",Toast.LENGTH_SHORT).show();
+                if(!isValidEmail(_email,email)){
+                    Toast.makeText(SignupActivity.this,"Please enter a valid email",Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
@@ -145,8 +146,19 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
-    public static boolean isValidEmail(CharSequence target) {
-        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+    public static boolean isValidEmail(CharSequence target, EditText email) {
+        if(!TextUtils.isEmpty(target)){
+            if(Patterns.EMAIL_ADDRESS.matcher(target).matches()){
+                return true;
+            }
+            else{
+                email.setError("Email entered is not in correct format");
+                return false;
+            }
+        }else {
+            email.setError("Field cannot be empty");
+            return false;
+        }
     }
 
     private boolean isPasswordValid(EditText password){
