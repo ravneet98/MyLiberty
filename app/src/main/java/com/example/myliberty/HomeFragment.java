@@ -7,14 +7,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.BoringLayout;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.TextAttribute;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.example.myliberty.Models.Customer;
 import com.example.myliberty.Utils.dateToDaysUtility;
@@ -26,6 +30,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -46,6 +52,7 @@ public class HomeFragment extends Fragment {
     SemiCircleArcProgressBar semiCircleArcProgressBar;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+
     public HomeFragment() {
         // Required empty public constructor
 
@@ -57,8 +64,11 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
     view=inflater.inflate(R.layout.fragment_home,container,false);
+
     mDatabase = FirebaseDatabase.getInstance().getReference();
-    mAuth = FirebaseAuth.getInstance();
+        mDatabase.keepSynced(true);
+
+        mAuth = FirebaseAuth.getInstance();
     uid=mAuth.getUid();
     name=view.findViewById(R.id.name);
     remainingData=view.findViewById(R.id.remainingData);
@@ -68,15 +78,16 @@ public class HomeFragment extends Fragment {
     totalData=view.findViewById(R.id.totalData);
     upgrade=view.findViewById(R.id.upgrade);
     semiCircleArcProgressBar=view.findViewById(R.id.dataRemainingProgressArc);
+    progressBar=view.findViewById(R.id.progressBar);
 
-    upgrade.setOnClickListener(new View.OnClickListener() {
+        upgrade.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
             FragmentTransaction fragmentTransaction = getActivity()
                     .getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.flFragment, new PlansFragment());
             fragmentTransaction.commit();
+
         }
     });
     getData(mDatabase,uid);
@@ -88,18 +99,21 @@ public class HomeFragment extends Fragment {
 
 
     public void getData(DatabaseReference mDatabase, String uid){
+        progressBar.setVisibility(View.VISIBLE);
         mDatabase.child("accountInfo").child(uid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());
+
                 }
                 else {
                     customer=task.getResult().getValue(Customer.class);
-
-
-                    name.setText(customer.getName());
+                    progressBar.setVisibility(View.GONE);
+                    String[] _name= customer.getName().split(" ");
+                    String sourceString = _name[0]+" "+"<b>" + _name[1] + "</b> ";
+                    name.setText(Html.fromHtml(sourceString));
                     remainingData.setText(customer.getDataRemaining().toString()+"GB");
                     minData.setText("0GB");
                     Timestamp timestamp = new Timestamp(System.currentTimeMillis());

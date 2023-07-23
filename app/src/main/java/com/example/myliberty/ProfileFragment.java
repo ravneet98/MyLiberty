@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +54,7 @@ public class ProfileFragment extends Fragment {
     ImageButton logoutbutton;
 
     String _name;
+    ProgressBar progressBar;
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
                     "(?=.*[@#$%^&+=])" +     // at least 1 special character
@@ -79,6 +81,8 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         view=inflater.inflate(R.layout.fragment_profile,container,false);
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.keepSynced(true);
+
         mAuth = FirebaseAuth.getInstance();
         uid=mAuth.getUid();
         add_password_layout=view.findViewById(R.id.add_query_layout);
@@ -94,6 +98,7 @@ public class ProfileFragment extends Fragment {
         newPassword=view.findViewById(R.id.newPassword1);
         newPassword2=view.findViewById(R.id.newPassword2);
         backbtn=view.findViewById(R.id.back);
+        progressBar=view.findViewById(R.id.progressBar);
 
         getData(mDatabase,uid);
 

@@ -19,6 +19,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +54,7 @@ Customer customer;  String uid;
     AlertDialog.Builder builder;
     LinearLayout upgradeDialog;
 
-
+    ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,7 +74,10 @@ Customer customer;  String uid;
         animShow = AnimationUtils.loadAnimation( getContext(), R.anim.view_show);
         animHide = AnimationUtils.loadAnimation( getContext(), R.anim.view_hide);
         mDatabase= FirebaseDatabase.getInstance().getReference("plans");
+        mDatabase.keepSynced(true);
+
         mDatabaseCustomer=FirebaseDatabase.getInstance().getReference("accountInfo");
+        mDatabaseCustomer.keepSynced(true);
         builder = new AlertDialog.Builder(getContext());
         mAuth = FirebaseAuth.getInstance();
         uid=mAuth.getUid();
@@ -82,6 +86,8 @@ Customer customer;  String uid;
         planList=new ArrayList<>();
         planAdapter=new planAdapter(getContext(),planList,this);
         recyclerView.setAdapter(planAdapter);
+        progressBar=view.findViewById(R.id.progressBar);
+
         getCustomer(mDatabaseCustomer,uid);
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override

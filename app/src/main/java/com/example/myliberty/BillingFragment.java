@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,6 +72,7 @@ public class BillingFragment extends Fragment {
     String _paymentAmount,outstandingPayment;
     PaymentButtonContainer paymentButtonContainer;
     private static final DecimalFormat df = new DecimalFormat("0.00");
+    ProgressBar progressBar;
 
     Customer customer;
     private static final String clientID = "AQUoNG5bje_mCjO9c1Qb_G3xiQxs-auBoxfi_NFMtfscDmaHXfcnGiWXfxlsXQ5XsrQH_bz5GBu_0IAU";
@@ -92,12 +94,13 @@ public class BillingFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         uid= mAuth.getUid();
         mDatabase= FirebaseDatabase.getInstance().getReference("accountInfo").child(uid);
+        mDatabase.keepSynced(true);
         name=view.findViewById(R.id.name);
         accountNumber=view.findViewById(R.id.accountNumber);
         paymentLastDate=view.findViewById(R.id.paymentLastDate);
         paymentAmount=view.findViewById(R.id.paymentAmount);
         paymentButtonContainer=view.findViewById(R.id.payment_button_container);
-
+        progressBar=view.findViewById(R.id.progressBar);
         paymentButtonContainer.setup(
                 createOrderActions -> {
                     ArrayList<PurchaseUnit> purchaseUnits = new ArrayList<>();
@@ -166,17 +169,14 @@ public class BillingFragment extends Fragment {
                                                         timestamp.toString(),"days")
                                 ));
 
-                        if(customer.getBillPaid()){
-                            paymentAmount.setText("$0");
 
-                        }else{
-                            if(!customer.getBillPaid()){
+                            if(!customer.getBillPaid()&&!outstandingPayment.equals("0.00")){
                               paymentButtonContainer.setVisibility(View.VISIBLE);
                             }
                             _paymentAmount=plan.getPlanCost();
                             paymentAmount.setText("$"+outstandingPayment);
 
-                        }
+
                     }
 
                     @Override
@@ -200,7 +200,7 @@ public class BillingFragment extends Fragment {
 
 
 public void updateData(Customer customer,DatabaseReference mDatabase){
-
+    progressBar.setVisibility(View.VISIBLE);
     Timestamp cycleDate=dateToDaysUtility.stringToTimestamp(customer.getCycleEndDate());
     Customer _customer=new Customer(customer.getAccountNumber(),
             customer.getName(),
@@ -219,6 +219,7 @@ public void updateData(Customer customer,DatabaseReference mDatabase){
                 _paymentAmount="0";
                 outstandingPayment="0";
                 paymentButtonContainer.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
             }else{
 
             }

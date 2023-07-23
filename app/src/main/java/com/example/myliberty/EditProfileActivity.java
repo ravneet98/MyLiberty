@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.myliberty.Models.Customer;
@@ -30,7 +31,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     String nameUser, emailUser, userAccountnumber, passwordUser;
     DatabaseReference reference;
-
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

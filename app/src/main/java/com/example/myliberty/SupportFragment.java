@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.myliberty.Adapter.planAdapter;
@@ -51,6 +52,7 @@ public class SupportFragment extends Fragment {
     EditText query;
     FirebaseAuth mAuth;
     Animation animShow, animHide;
+    ProgressBar progressBar;
     public SupportFragment() {
         // Required empty public constructor
     }
@@ -73,6 +75,8 @@ public class SupportFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase= FirebaseDatabase.getInstance().getReference("queries");
+        mDatabase.keepSynced(true);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         supportQueries=new ArrayList<>();

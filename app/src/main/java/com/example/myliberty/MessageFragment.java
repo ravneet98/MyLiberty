@@ -11,6 +11,7 @@ import com.example.myliberty.Adapter.messageAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.myliberty.Adapter.planAdapter;
@@ -34,7 +35,7 @@ public class MessageFragment extends Fragment {
     messageAdapter messageAdapter;
     ArrayList<Message> messages;
 
-
+    ProgressBar progressBar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,15 +44,20 @@ public class MessageFragment extends Fragment {
         recyclerView=view.findViewById(R.id.messageView);
 
         mDatabase= FirebaseDatabase.getInstance().getReference("messages");
+        mDatabase.keepSynced(true);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         messages=new ArrayList<>();
         messageAdapter=new messageAdapter(getContext(),messages);
         recyclerView.setAdapter(messageAdapter);
+        progressBar=view.findViewById(R.id.progressBar);
 
         mDatabase.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                progressBar.setVisibility(View.VISIBLE);
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                     Message message=dataSnapshot.getValue(Message.class);
                     messages.add(message);
@@ -59,6 +65,7 @@ public class MessageFragment extends Fragment {
 
                 }
                 messageAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
