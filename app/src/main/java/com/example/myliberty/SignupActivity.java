@@ -15,6 +15,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.myliberty.Models.Customer;
+import com.example.myliberty.Models.Plan;
+import com.example.myliberty.Models.account_number;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -72,10 +74,11 @@ public class SignupActivity extends AppCompatActivity {
         signup=findViewById(R.id.signup);
         progressBar=findViewById(R.id.progressBar);
         login=findViewById(R.id.login);
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               finish();
+               onBackPressed();
             }
         });
 
@@ -89,56 +92,85 @@ public class SignupActivity extends AppCompatActivity {
                 _password=String.valueOf(password.getText());
                 _accountNumber=String.valueOf(accountNumber.getText());
                 _name=String.valueOf(name.getText());
-                if(TextUtils.isEmpty(_accountNumber) || _accountNumber.length() != 9||!_accountNumber.matches("[0-9]+")){
-                    Toast.makeText(SignupActivity.this,"Please enter a valid account Number",Toast.LENGTH_SHORT).show();
-                    accountNumber.setError("Account number should not be empty and must contain only digits from 0-9 and length must be 9");
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                }
-                if(TextUtils.isEmpty(_name)||!name.getText().toString().matches("[a-zA-Z ]+")){
-                    Toast.makeText(SignupActivity.this,"Please enter valid name",Toast.LENGTH_SHORT).show();
-                    name.setError("Name should not be empty and should contain only alphabetical characters");
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                }
-                if(!isValidEmail(_email,email)){
-                    Toast.makeText(SignupActivity.this,"Please enter a valid email",Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                }
-                if(!isPasswordValid(password)){
-                    Toast.makeText(SignupActivity.this,"Please enter a valid password",Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                }
-
-                mAuth.createUserWithEmailAndPassword(_email,_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                mDatabase.child("accountNumber").child(_accountNumber).addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressBar.setVisibility(View.GONE);
-                        if(task.isSuccessful()){
-                            String uid=mAuth.getUid();
-                            String mobileNumber=mobile_account.get(_accountNumber);
-                            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-                            writeData(uid,_accountNumber,_name,_email,"31424",mobileNumber,timestamp.toString(),addDays(timestamp,30).toString(),true,2.3f,20f);
-                           Toast.makeText(SignupActivity.this,"Account Created Successfully",Toast.LENGTH_SHORT).show();
-
-
-                            Intent i =new Intent(getApplicationContext(),MainActivity.class);
-                            startActivity(i);
-                        }
-                        else{
-                            Toast.makeText(SignupActivity.this,"Account Creation failed",Toast.LENGTH_SHORT).show();
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()&&validateInput(_accountNumber,_name,_email)){
+                            account_number ac=snapshot.getValue(account_number.class);
+                            if(!ac.getRegistered()){
+                           createUser(_email, _password, _accountNumber, _name,ac.getNumber());}
+                            else {
+                                Toast.makeText(getApplicationContext(),"Account already registered",Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        }else{
+                            Toast.makeText(getApplicationContext(),"Please enter valid account details",Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
                 });
+
+
+
             }
 
         });
 
 
+    }
+    public void createUser(String _email,String _password,String _accountNumber,String _name,String _number){
+        mAuth.createUserWithEmailAndPassword(_email,_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                progressBar.setVisibility(View.GONE);
+                if(task.isSuccessful()){
+                    String uid=mAuth.getUid();
+                    ;
+                    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+                    writeData(uid,_accountNumber,_name,_email,"31424",_number,timestamp.toString(),addDays(timestamp,30).toString(),true,2.3f,20f);
+                    Toast.makeText(SignupActivity.this,"Account Created Successfully",Toast.LENGTH_SHORT).show();
+
+
+                    Intent i =new Intent(getApplicationContext(),MainActivity.class);
+                    startActivity(i);
+                }
+                else{
+                    Toast.makeText(SignupActivity.this,"Account Creation failed",Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
+    }
+    public Boolean validateInput(String _accountNumber,String _name, String _email){
+        if(TextUtils.isEmpty(_accountNumber) || _accountNumber.length() != 9||!_accountNumber.matches("[0-9]+")){
+            Toast.makeText(SignupActivity.this,"Please enter a valid account Number",Toast.LENGTH_SHORT).show();
+            accountNumber.setError("Account number should not be empty and must contain only digits from 0-9 and length must be 9");
+            progressBar.setVisibility(View.GONE);
+            return false;
+        }
+        if(TextUtils.isEmpty(_name)||!name.getText().toString().matches("[a-zA-Z ]+")){
+            Toast.makeText(SignupActivity.this,"Please enter valid name",Toast.LENGTH_SHORT).show();
+            name.setError("Name should not be empty and should contain only alphabetical characters");
+            progressBar.setVisibility(View.GONE);
+            return false;
+        }
+        if(!isValidEmail(_email,email)){
+            Toast.makeText(SignupActivity.this,"Please enter a valid email",Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.GONE);
+            return false;
+        }
+        if(!isPasswordValid(password)){
+            Toast.makeText(SignupActivity.this,"Please enter a valid password",Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.GONE);
+            return false;
+        }
+        return true;
     }
     public void writeData(String uid, String accountNumber,String name, String email,String planId,String mobileNumber,String cycleStartDate, String cycleEndDate, Boolean billPaid, Float dataRemaining,Float maxData){
         Customer customer=new Customer(accountNumber,name,email,planId,mobileNumber,cycleStartDate,cycleEndDate,billPaid,dataRemaining,maxData);

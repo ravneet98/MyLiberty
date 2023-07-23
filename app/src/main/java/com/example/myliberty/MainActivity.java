@@ -58,34 +58,34 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.home:
                 getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.flFragment, homeFragment)
+                        .beginTransaction().setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit)
+                        .replace(R.id.flFragment, homeFragment).addToBackStack(null)
                         .commit();
                 return true;
 
             case R.id.support:
                 getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.flFragment, supportFragment)
+                        .beginTransaction().setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit)
+                        .replace(R.id.flFragment, supportFragment).addToBackStack(null)
                         .commit();
                 return true;
 
             case R.id.billing:
                 getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.flFragment, billingFragment)
+                        .beginTransaction().setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit)
+                        .replace(R.id.flFragment, billingFragment).addToBackStack(null)
                         .commit();
                 return true;
             case R.id.profile:
                 getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.flFragment, profileFragment)
+                        .beginTransaction().setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit)
+                        .replace(R.id.flFragment, profileFragment).addToBackStack(null)
                         .commit();
                 return true;
             case R.id.plans:
                 getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.flFragment, plansFragment)
+                        .beginTransaction().setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit)
+                        .replace(R.id.flFragment, plansFragment).addToBackStack(null)
                         .commit();
                 return true;
         }

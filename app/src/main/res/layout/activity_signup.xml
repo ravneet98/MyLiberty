@@ -15,7 +15,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/top_background" />
+        app:srcCompat="@drawable/top_background"
+        android:transitionName="bg"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -85,7 +86,8 @@
             android:text="Email"
             android:textColor="#212121"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:transitionName="emailTv"/>
 
         <EditText
             android:id="@+id/email"
@@ -100,7 +102,8 @@
             android:textColor="#707070"
 
 
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:transitionName="emailEt"/>
 
         <TextView
             android:id="@+id/textView3"
@@ -110,7 +113,8 @@
             android:text="Password"
             android:textColor="#212121"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:transitionName="passwordTv"/>
 
         <EditText
             android:id="@+id/password"
@@ -124,7 +128,8 @@
             android:padding="12dp"
             android:textColor="#707070"
 
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:transitionName="passwordEt"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -136,9 +141,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/button_background"
+                android:background="@drawable/button_background_light_green"
                 android:text="Signup"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:transitionName="signupBt"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -176,9 +183,10 @@
                 android:id="@+id/login"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@drawable/button_background_light_green"
+                android:background="@drawable/button_background"
                 android:text="Login"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:transitionName="loginBt"/>
         </LinearLayout>
 
 

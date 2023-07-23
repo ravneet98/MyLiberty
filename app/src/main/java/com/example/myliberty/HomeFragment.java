@@ -84,8 +84,8 @@ public class HomeFragment extends Fragment {
         @Override
         public void onClick(View view) {
             FragmentTransaction fragmentTransaction = getActivity()
-                    .getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.flFragment, new PlansFragment());
+                    .getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+            fragmentTransaction.replace(R.id.flFragment, new PlansFragment()).addToBackStack(null);
             fragmentTransaction.commit();
 
         }
