@@ -43,10 +43,10 @@ public class supportAdapter extends RecyclerView.Adapter<supportAdapter.MyViewHo
         holder.query.setText(_supportQueries.getQuery());
 
         if(_supportQueries.getStatus().equals("completed")) {
-            holder.isSolved.setBackgroundResource(R.drawable.check);
+            holder.isSolved.setBackgroundResource(R.drawable.verified);
             holder.solution.setText(_supportQueries.getSolution());
         }else {
-            holder.isSolved.setBackgroundResource(R.drawable.remove);
+           // holder.isSolved.setBackgroundResource(R.drawable.remove);
             holder.solution.setText("yet to be solved");
             holder.solution.setTypeface(null, Typeface.ITALIC);
         }

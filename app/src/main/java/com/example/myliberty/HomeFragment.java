@@ -112,7 +112,15 @@ public class HomeFragment extends Fragment {
                     customer=task.getResult().getValue(Customer.class);
                     progressBar.setVisibility(View.GONE);
                     String[] _name= customer.getName().split(" ");
-                    String sourceString = _name[0]+" "+"<b>" + _name[1] + "</b> ";
+                    String sourceString = null;
+                    for (int i=0;i<_name.length;i++){
+
+                        if(i==1){
+                            sourceString+=" "+"<b>" + _name[i] + "</b> ";
+                        }else {
+                            sourceString=_name[i];
+                        }
+                    }
                     name.setText(Html.fromHtml(sourceString));
                     remainingData.setText(customer.getDataRemaining().toString()+"GB");
                     minData.setText("0GB");
