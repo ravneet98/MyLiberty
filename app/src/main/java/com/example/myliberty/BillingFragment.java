@@ -201,14 +201,14 @@ public class BillingFragment extends Fragment {
 
 public void updateData(Customer customer,DatabaseReference mDatabase){
     progressBar.setVisibility(View.VISIBLE);
-    Timestamp cycleDate=dateToDaysUtility.stringToTimestamp(customer.getCycleEndDate());
+    Timestamp cycleDate= new Timestamp(System.currentTimeMillis());
     Customer _customer=new Customer(customer.getAccountNumber(),
             customer.getName(),
             customer.getEmail(),
             customer.getPlanId(),
             customer.getMobileNumber(),
             dateToDaysUtility.addDays(cycleDate,1).toString(),
-            dateToDaysUtility.addDays(cycleDate,31).toString(),
+            dateToDaysUtility.addDays(cycleDate,30).toString(),
             true,
             customer.getMaxData(),
             customer.getMaxData());
