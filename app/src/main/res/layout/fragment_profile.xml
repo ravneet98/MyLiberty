@@ -107,6 +107,28 @@
                 android:padding="12dp"
                 android:textColor="#707070"
                 android:textSize="18sp" />
+            <TextView
+                android:id="@+id/textViewNew"
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mobile Number"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/MobileNumber"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/editext_background"
+                android:ems="10"
+                android:hint="6478767458"
+                android:inputType="textEmailAddress"
+                android:padding="12dp"
+                android:textColor="#707070"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/textView2"
