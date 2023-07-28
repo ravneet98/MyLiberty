@@ -133,7 +133,7 @@ public class SignupActivity extends AppCompatActivity {
                     ;
                     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-                    writeData(uid,_accountNumber,_name,_email,"31424",_number,timestamp.toString(),addDays(timestamp,30).toString(),true,2.3f,20f);
+                    writeData(uid,_accountNumber,_name,_email,"31424",_number,timestamp.toString(),addDays(timestamp,30).toString(),false,20f,20f);
                     Toast.makeText(SignupActivity.this,"Account Created Successfully",Toast.LENGTH_SHORT).show();
 
 
@@ -174,8 +174,9 @@ public class SignupActivity extends AppCompatActivity {
     }
     public void writeData(String uid, String accountNumber,String name, String email,String planId,String mobileNumber,String cycleStartDate, String cycleEndDate, Boolean billPaid, Float dataRemaining,Float maxData){
         Customer customer=new Customer(accountNumber,name,email,planId,mobileNumber,cycleStartDate,cycleEndDate,billPaid,dataRemaining,maxData);
+        account_number account_number=new account_number(mobileNumber,true);
+        mDatabase.child("accountNumber").child(accountNumber).setValue(account_number);
         mDatabase.child("accountInfo").child(uid).setValue(customer);
-
     }
 
     public static boolean isValidEmail(CharSequence target, EditText email) {
