@@ -48,7 +48,7 @@ public class ProfileFragment extends Fragment {
 
     View view;
     EditText name,password,newPassword,newPassword2;
-    TextView email,accountNumber;
+    TextView email,accountNumber,mobileNumber;
 
     Button updateprofile,changePasswordBtn,backbtn,changePasswordBtn2;
     ImageButton logoutbutton;
@@ -89,6 +89,7 @@ public class ProfileFragment extends Fragment {
         linearLayout1 = view.findViewById(R.id.linearLayout1);
         name=view.findViewById(R.id.name);
         email=view.findViewById(R.id.email);
+        mobileNumber=view.findViewById(R.id.MobileNumber);
         logoutbutton=view.findViewById(R.id.logoutbtn);
         accountNumber=view.findViewById(R.id.accountNumber);
         password=view.findViewById(R.id.currentPassword);
@@ -174,6 +175,7 @@ public class ProfileFragment extends Fragment {
                     name.setText(customer.getName());
                     email.setText(customer.getEmail());
                     accountNumber.setText(customer.getAccountNumber());
+                    mobileNumber.setText(customer.getMobileNumber());
 
 
                 }
