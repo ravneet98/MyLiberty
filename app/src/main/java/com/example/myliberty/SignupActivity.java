@@ -7,9 +7,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -37,6 +41,8 @@ public class SignupActivity extends AppCompatActivity {
     private EditText name;
     private EditText email;
     private EditText password;
+
+    private  CheckBox mCbShowPwd;
     private EditText accountNumber;
     private Button signup,login;
     private FirebaseAuth mAuth;
@@ -68,6 +74,7 @@ public class SignupActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         name=findViewById(R.id.name);
+        mCbShowPwd=findViewById(R.id.cbShowPwd);
         email=findViewById(R.id.email);
         password=findViewById(R.id.password);
         accountNumber=findViewById(R.id.accountNumber);
@@ -79,6 +86,20 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                onBackPressed();
+            }
+        });
+
+        mCbShowPwd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // checkbox status is changed from uncheck to checked.
+                if (!isChecked) {
+                    // show password
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                } else {
+                    // hide password
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
             }
         });
 
