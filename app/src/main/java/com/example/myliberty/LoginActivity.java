@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
         else if (!PASSWORD_PATTERN.matcher(password.getText().toString()).matches()) {
             password.setError("Password is not valid it should have at least 1 special " +
                     "character, no white spaces, and number of characters must be in the range of 8-16");
-            return true;
+            return false;
         } else {
             password.setError(null);
             return true;
@@ -144,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
     public static boolean isValidEmail(CharSequence target, EditText email) {
         if(!TextUtils.isEmpty(target)){
             if(Patterns.EMAIL_ADDRESS.matcher(target).matches()){
-                return false;
+                return true;
             }
             else{
                 email.setError("Email entered is not in correct format");

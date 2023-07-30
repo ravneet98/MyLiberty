@@ -22,15 +22,13 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="700dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="114dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.56">
 
         <TextView
@@ -88,7 +86,7 @@
             android:textColor="#212121"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:transitionName="emailTv"/>
+            android:transitionName="emailTv" />
 
         <EditText
             android:id="@+id/email"
@@ -104,7 +102,7 @@
 
 
             android:textSize="18sp"
-            android:transitionName="emailEt"/>
+            android:transitionName="emailEt" />
 
         <TextView
             android:id="@+id/textView3"
@@ -115,7 +113,7 @@
             android:textColor="#212121"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:transitionName="passwordTv"/>
+            android:transitionName="passwordTv" />
 
         <EditText
             android:id="@+id/password"
@@ -130,14 +128,15 @@
             android:textColor="#707070"
 
             android:textSize="18sp"
-            android:transitionName="passwordEt"/>
-            <CheckBox
+            android:transitionName="passwordEt" />
+
+        <CheckBox
             android:id="@+id/cbShowPwd"
-            android:minHeight="48dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/password"
             android:layout_below="@+id/password"
+            android:layout_alignLeft="@+id/password"
+            android:minHeight="48dp"
             android:text="Show password" />
 
         <LinearLayout
@@ -153,8 +152,7 @@
                 android:background="@drawable/button_background_light_green"
                 android:text="Signup"
                 android:textColor="@color/white"
-                android:transitionName="signupBt"
-                />
+                android:transitionName="signupBt" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -195,7 +193,7 @@
                 android:background="@drawable/button_background"
                 android:text="Login"
                 android:textColor="@color/white"
-                android:transitionName="loginBt"/>
+                android:transitionName="loginBt" />
         </LinearLayout>
 
     </LinearLayout>

@@ -13,6 +13,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
             if (!TextUtils.isEmpty(token)) {
-                Log.d("token", "retrieve token successful : " + token);
+                Log.d("tokenn", "retrieve token successful : " + token);
             } else{
                 Log.w("fail", "token should not be null...");
             }
@@ -67,6 +69,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }).addOnCanceledListener(() -> {
             //handle cancel
         }).addOnCompleteListener(task -> Log.v("tokenn", "This is the token : " + task.getResult()));
+        FirebaseMessaging.getInstance().subscribeToTopic("web_app")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "Done";
+                        if (!task.isSuccessful()) {
+                            msg = "Failed";
+                        }
+
+                    }
+                });
         PayPalCheckout.setConfig(new CheckoutConfig(
                 getApplication(),
                 "AQUoNG5bje_mCjO9c1Qb_G3xiQxs-auBoxfi_NFMtfscDmaHXfcnGiWXfxlsXQ5XsrQH_bz5GBu_0IAU",
